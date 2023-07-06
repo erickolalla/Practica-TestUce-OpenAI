@@ -22,7 +22,7 @@ async def say_hello(name: str):
 def inference(doc: Document):
     explicacion = process_inference(doc.item)
     return {
-        'Respuesta de la interación con el chat': explicacion[0],
+        'Respuesta de la interación con el chat: ': explicacion[0],
         'Total de tokens consumidos: ': explicacion[1]
     }
 
