@@ -1,31 +1,23 @@
 import openai
 from pydantic import BaseModel
 
-openai.organization = 'tu key empresa'
-openai.api_key = 'tu key personal'
+openai.organization = 'org-VuqI6upRDoGnYHHjA7hWBHkS'
+openai.api_key = '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'
 
 
 class Document(BaseModel):
-    item: str = 'pizza'
-
+    item: str = ''
 
 def process_inference(user_prompt) -> str:
     print('[PROCESANDO]'.center(40, '-'))
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
+        temperature = 0.2,
         messages=[
-            {"role": "system", "content": """Eres un chef que lista los ingredientes de los platillos que se te proporcionan.
-        E.G
-        pan
-        Ingredientes:
-        arina
-        huevos
-        agua
-        azucar
-        ...
-        """},
+            {"role": "system", "content": """Eres un profesor de programación para estudiantes universitarios de la carrera de sistemas de información, necesito que respondas de forma clara y concisa lo que se te pregunte y ejemplificar"""},
             {"role": "user", "content": user_prompt}
         ]
     )
     response = completion.choices[0].message.content
-    return response
+    total_tokens = completion.usage.total_tokens
+    return [response, total_tokens]
